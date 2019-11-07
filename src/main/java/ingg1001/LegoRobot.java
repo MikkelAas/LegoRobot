@@ -30,7 +30,6 @@ public class LegoRobot {
         default position
          */
         if (colorSensor.getColorID() == 2){
-
             // Have to change the Delay, Speed and Direction based on what we observe
             largeRegulatedMotor.setSpeed(200);
             largeRegulatedMotor.forward();
@@ -46,14 +45,15 @@ public class LegoRobot {
         /* If the color is green, move to a fixed position and the deposit the green matter before returning to the
         default position
          */
-
-        // Have to change the Delay, Speed and Direction based on what we observe
-        largeRegulatedMotor.setSpeed(200);
-        largeRegulatedMotor.forward();
-        Delay.msDelay(200);
-        mediumRegulatedMotor.setAcceleration(10);
-        mediumRegulatedMotor.forward();
-        Delay.msDelay(200);
+        if(colorSensor.getColorID() == 4) {
+            // Have to change the Delay, Speed and Direction based on what we observe
+            largeRegulatedMotor.setSpeed(200);
+            largeRegulatedMotor.forward();
+            Delay.msDelay(200);
+            mediumRegulatedMotor.setAcceleration(10);
+            mediumRegulatedMotor.forward();
+            Delay.msDelay(200);
+        }
     }
 
     // A method that sortrs by Red
@@ -61,13 +61,15 @@ public class LegoRobot {
         /* If the color is red, move to a fixed position and the deposit the green matter before returning to the
         default position
          */
-        // Have to change the Delay, Speed and Direction based on what we observe
-        largeRegulatedMotor.setSpeed(200);
-        largeRegulatedMotor.forward();
-        Delay.msDelay(200);
-        mediumRegulatedMotor.setAcceleration(10);
-        mediumRegulatedMotor.forward();
-        Delay.msDelay(200);
+        if(colorSensor.getColorID() == 5) {
+            // Have to change the Delay, Speed and Direction based on what we observe
+            largeRegulatedMotor.setSpeed(200);
+            largeRegulatedMotor.forward();
+            Delay.msDelay(200);
+            mediumRegulatedMotor.setAcceleration(10);
+            mediumRegulatedMotor.forward();
+            Delay.msDelay(200);
+        }
     }
 
     // A method that sorts by Yellow
@@ -75,13 +77,15 @@ public class LegoRobot {
         /* If the color is yellow, move to a fixed position and the deposit the green matter before returning to the
         default position
          */
-        // Have to change the Delay, Speed and Direction based on what we observe
-        largeRegulatedMotor.setSpeed(200);
-        largeRegulatedMotor.forward();
-        Delay.msDelay(200);
-        mediumRegulatedMotor.setAcceleration(10);
-        mediumRegulatedMotor.forward();
-        Delay.msDelay(200);
+        if (colorSensor.getColorID() == 4) {
+            // Have to change the Delay, Speed and Direction based on what we observe
+            largeRegulatedMotor.setSpeed(200);
+            largeRegulatedMotor.forward();
+            Delay.msDelay(200);
+            mediumRegulatedMotor.setAcceleration(10);
+            mediumRegulatedMotor.forward();
+            Delay.msDelay(200);
+        }
     }
 
     // A method that prints the colour of the scanned objects
