@@ -1,9 +1,3 @@
-/* *
- *
- * @authors Aas, Mikkel; Karlsmoen, F. Jakob; R&oslash;nning-Nyvold, Petter; Sandvold, Mathias
- * @version 1.1 Build 1000 Nov 7, 2019
- */
-
 package ingg1001;
 
 import ev3dev.actuators.lego.motors.EV3LargeRegulatedMotor;
@@ -16,6 +10,14 @@ import lejos.hardware.port.MotorPort;
 import lejos.hardware.port.SensorPort;
 
 import lejos.utility.Delay;
+
+/**
+ *
+ * @author Aas, Mikkel
+ * @author Karlsmoen, F. Jakob
+ * @author Ronning-nyvold, Petter
+ * @author Sandvold, Mathias
+ */
 
 public class LegoRobot {
 
