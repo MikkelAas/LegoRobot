@@ -2,10 +2,14 @@ package ingg1001;
 
 import ev3dev.actuators.lego.motors.EV3LargeRegulatedMotor;
 import ev3dev.actuators.lego.motors.EV3MediumRegulatedMotor;
+
 import ev3dev.sensors.ev3.EV3ColorSensor;
 import ev3dev.sensors.ev3.EV3TouchSensor;
+
 import lejos.hardware.port.MotorPort;
 import lejos.hardware.port.SensorPort;
+
+import lejos.utility.Delay;
 
 public class LegoRobot {
 
@@ -48,8 +52,24 @@ public class LegoRobot {
          */
     }
 
-    public static void main(String[] args) {
+    public String getColour() {
+        String readColour;
+        colorSensor.getColorIDMode();
 
+        float[] colorSample = new float[colorSensor.sampleSize()];
+        colorSensor.fetchSample(colorSample, 0);
+
+        String[] colors = {"NONE", "BLACK", "BLUE", "GREEN", "YELLOW", "RED", "WHITE", "Brown"};
+
+        return colors[(int) colorSample[0]];
+    }
+
+    public static void main(String[] args) {
+        LegoRobot robot = new LegoRobot();
+        while (true) {
+            System.out.println(robot.getColour());
+            Delay.msDelay(1000);
+        }
 
     }
 }
