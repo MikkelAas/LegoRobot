@@ -1,0 +1,10 @@
+// Project configuration
+brick.pref {
+    // Main class //
+    mainClass = "ingg1001.LegoRobot"
+
+    // Brick connection parameters //
+    sshHost = "10.42.0.150"
+    sshUser = "robot"
+    sshPassword = "maker"
+}
