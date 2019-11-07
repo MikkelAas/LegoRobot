@@ -60,6 +60,7 @@ public class LegoRobot {
             mediumRegulatedMotor.forward();
             Delay.msDelay(200);
         }
+
     }
 
     // A method that sortrs by Red
@@ -115,6 +116,12 @@ public class LegoRobot {
         while (true) {
             System.out.println(robot.getColour());
             Delay.msDelay(1000);
+
+            robot.sortBlue();
+            robot.sortGreen();
+            robot.sortYellow();
+            robot.sortRed();
+
         }
 
     }
