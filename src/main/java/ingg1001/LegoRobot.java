@@ -54,7 +54,6 @@ public class LegoRobot {
 
     // A method that prints the colour of the scanned objects
     public String getColour() {
-        String readColour;
         colorSensor.getColorIDMode();
 
         float[] colorSample = new float[colorSensor.sampleSize()];

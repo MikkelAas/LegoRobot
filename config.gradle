@@ -4,7 +4,7 @@ brick.pref {
     mainClass = "ingg1001.LegoRobot"
 
     // Brick connection parameters //
-    sshHost = "10.42.0.150"
+    sshHost = "10.42.0.10"
     sshUser = "robot"
     sshPassword = "maker"
 }
