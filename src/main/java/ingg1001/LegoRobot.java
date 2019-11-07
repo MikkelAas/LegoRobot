@@ -62,7 +62,7 @@ public class LegoRobot {
 
         String[] colors = {"NONE", "BLACK", "BLUE", "GREEN", "YELLOW", "RED", "WHITE", "Brown"};
 
-        // Returnes a String from the colors array based on what int it fetches
+        // Returns a String from the colors array based on what int it fetches
         return colors[(int) colorSample[0]];
     }
 
