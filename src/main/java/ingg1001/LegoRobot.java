@@ -53,7 +53,6 @@ public class LegoRobot {
     }
 
     public String getColour() {
-        String readColour;
         colorSensor.getColorIDMode();
 
         float[] colorSample = new float[colorSensor.sampleSize()];
