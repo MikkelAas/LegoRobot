@@ -57,10 +57,12 @@ public class LegoRobot {
         colorSensor.getColorIDMode();
 
         float[] colorSample = new float[colorSensor.sampleSize()];
+        // Returns an int from 0 to 7
         colorSensor.fetchSample(colorSample, 0);
 
         String[] colors = {"NONE", "BLACK", "BLUE", "GREEN", "YELLOW", "RED", "WHITE", "Brown"};
 
+        // Returnes a String from the colors array based on what int it fetches
         return colors[(int) colorSample[0]];
     }
 
