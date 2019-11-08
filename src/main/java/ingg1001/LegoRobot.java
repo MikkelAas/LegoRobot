@@ -12,7 +12,7 @@ import lejos.hardware.port.SensorPort;
 import lejos.utility.Delay;
 
 /**
- *
+ * Class for robot that sorts colours
  * @author Aas, Mikkel
  * @author Karlsmoen, F. Jakob
  * @author Ronning-nyvold, Petter
