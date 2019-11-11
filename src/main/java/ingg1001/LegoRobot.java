@@ -29,9 +29,7 @@ public class LegoRobot {
 
     // A method that sorts by Blue
     public void sortBlue() {
-        returnToStart();
-        moveSorter(300, 200, true);
-        dispenseObject();
+
     }
 
     // A method that sorts by Green
