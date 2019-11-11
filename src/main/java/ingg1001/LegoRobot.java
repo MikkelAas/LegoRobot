@@ -27,33 +27,32 @@ public class LegoRobot {
     public static final EV3TouchSensor touchSensor = new EV3TouchSensor(SensorPort.S2);
     public static final EV3MediumRegulatedMotor mediumRegulatedMotor = new EV3MediumRegulatedMotor(MotorPort.B);
 
-    // A method that returns the sorting machine to a default/prefixed position
-    public void returnToDefaultPosition(){
-        // Returns to a prefixed position, write once, use it A LOT
-    }
-
     // A method that sorts by Blue
     public void sortBlue() {
         returnToStart();
         moveSorter(300, 200, true);
+        dispenseObject();
     }
 
     // A method that sorts by Green
     public void sortGreen() {
         returnToStart();
         moveSorter(300, 400, true);
+        dispenseObject();
     }
 
     // A method that sortrs by Red
     public void sortRed() {
         returnToStart();
         moveSorter(300, 600, true);
+        dispenseObject();
     }
 
     // A method that sorts by Yellow
     public void sortYellow(){
         returnToStart();
         moveSorter(300, 800, true);
+        dispenseObject();
     }
 
     public void moveSorter(int speed, int duration, boolean directionForwards) {
@@ -101,6 +100,5 @@ public class LegoRobot {
             robot.sortRed();
 
         }
-
     }
 }
