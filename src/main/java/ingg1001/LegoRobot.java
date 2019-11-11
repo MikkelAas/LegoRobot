@@ -33,68 +33,27 @@ public class LegoRobot {
     }
 
     // A method that sorts by Blue
-    public void sortBlue(){
-        /* If the color is blue, move to a fixed position and the deposit the green matter before returning to the
-        default position
-         */
-        if (colorSensor.getColorID() == 2){
-            // Have to change the Delay, Speed and Direction based on what we observe
-            largeRegulatedMotor.setSpeed(200);
-            largeRegulatedMotor.forward();
-            Delay.msDelay(200);
-            mediumRegulatedMotor.setAcceleration(10);
-            mediumRegulatedMotor.forward();
-            Delay.msDelay(200);
-        }
+    public void sortBlue() {
+        returnToStart();
+        moveSorter(300, 200, true);
     }
 
     // A method that sorts by Green
-    public void sortGreen(){
-        /* If the color is green, move to a fixed position and the deposit the green matter before returning to the
-        default position
-         */
-        if(colorSensor.getColorID() == 4) {
-            // Have to change the Delay, Speed and Direction based on what we observe
-            largeRegulatedMotor.setSpeed(200);
-            largeRegulatedMotor.forward();
-            Delay.msDelay(200);
-            mediumRegulatedMotor.setAcceleration(10);
-            mediumRegulatedMotor.forward();
-            Delay.msDelay(200);
-        }
-
+    public void sortGreen() {
+        returnToStart();
+        moveSorter(300, 400, true);
     }
 
     // A method that sortrs by Red
-    public void sortRed(){
-        /* If the color is red, move to a fixed position and the deposit the green matter before returning to the
-        default position
-         */
-        if(colorSensor.getColorID() == 5) {
-            // Have to change the Delay, Speed and Direction based on what we observe
-            largeRegulatedMotor.setSpeed(200);
-            largeRegulatedMotor.forward();
-            Delay.msDelay(200);
-            mediumRegulatedMotor.setAcceleration(10);
-            mediumRegulatedMotor.forward();
-            Delay.msDelay(200);
-        }
+    public void sortRed() {
+        returnToStart();
+        moveSorter(300, 600, true);
     }
 
     // A method that sorts by Yellow
     public void sortYellow(){
-        /* If the color is yellow, move to a fixed position and the deposit the green matter before returning to the
-        default position
-         */
-        if (colorSensor.getColorID() == 4) {
-            // Have to change the Delay, Speed and Direction based on what we observe
-            largeRegulatedMotor.setSpeed(200);
-            largeRegulatedMotor.forward();
-            Delay.msDelay(200);
-            mediumRegulatedMotor.setAcceleration(10);
-            mediumRegulatedMotor.forward();
-            Delay.msDelay(200);
-        }
+        returnToStart();
+        moveSorter(300, 800, true);
     }
 
     public void moveSorter(int speed, int duration, boolean directionForwards) {
