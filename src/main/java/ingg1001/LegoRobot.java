@@ -97,6 +97,23 @@ public class LegoRobot {
         }
     }
 
+    public void moveSorter(int speed, int duration, boolean directionForwards) {
+        largeRegulatedMotor.setSpeed(speed);
+        if (directionForwards) {
+            largeRegulatedMotor.forward();
+        } else {
+            largeRegulatedMotor.backward();
+        }
+
+        Delay.msDelay(duration);
+    }
+
+    public void returnToStart() {
+        while (!touchSensor.isPressed()) {
+            moveSorter(300, 5, false);
+        }
+    }
+
     // A method that prints the colour of the scanned objects
     public String getColour() {
         colorSensor.getColorIDMode();
