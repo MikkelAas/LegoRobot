@@ -27,76 +27,70 @@ public class LegoRobot {
     public static final EV3TouchSensor touchSensor = new EV3TouchSensor(SensorPort.S2);
     public static final EV3MediumRegulatedMotor mediumRegulatedMotor = new EV3MediumRegulatedMotor(MotorPort.B);
 
-    // A method that returns the sorting machine to a default/prefixed position
-    public void returnToDefaultPosition(){
-        // Returns to a prefixed position, write once, use it A LOT
-    }
+    // A method that sorts by Blue
+    public void sortBlue() {
 
-    /**
-     * This method sorts
-     */
-    public void sortBlue(){
-        /* If the color is blue, move to a fixed position and the deposit the green matter before returning to the
-        default position
-         */
-        if (colorSensor.getColorID() == 2){
-            // Have to change the Delay, Speed and Direction based on what we observe
-            largeRegulatedMotor.setSpeed(200);
-            largeRegulatedMotor.forward();
-            Delay.msDelay(200);
-            mediumRegulatedMotor.setAcceleration(10);
-            mediumRegulatedMotor.forward();
-            Delay.msDelay(200);
-        }
     }
 
     // A method that sorts by Green
-    public void sortGreen(){
-        /* If the color is green, move to a fixed position and the deposit the green matter before returning to the
-        default position
-         */
-        if(colorSensor.getColorID() == 4) {
-            // Have to change the Delay, Speed and Direction based on what we observe
-            largeRegulatedMotor.setSpeed(200);
-            largeRegulatedMotor.forward();
-            Delay.msDelay(200);
-            mediumRegulatedMotor.setAcceleration(10);
-            mediumRegulatedMotor.forward();
-            Delay.msDelay(200);
-        }
-
+    public void sortGreen() {
+        returnToStart();
+        moveSorter(300, 400, true);
+        dispenseObject();
     }
 
     // A method that sortrs by Red
-    public void sortRed(){
-        /* If the color is red, move to a fixed position and the deposit the green matter before returning to the
-        default position
-         */
-        if(colorSensor.getColorID() == 5) {
-            // Have to change the Delay, Speed and Direction based on what we observe
-            largeRegulatedMotor.setSpeed(200);
-            largeRegulatedMotor.forward();
-            Delay.msDelay(200);
-            mediumRegulatedMotor.setAcceleration(10);
-            mediumRegulatedMotor.forward();
-            Delay.msDelay(200);
-        }
+    public void sortRed() {
+        returnToStart();
+        moveSorter(300, 600, true);
+        dispenseObject();
     }
 
     // A method that sorts by Yellow
     public void sortYellow(){
-        /* If the color is yellow, move to a fixed position and the deposit the green matter before returning to the
-        default position
-         */
-        if (colorSensor.getColorID() == 4) {
-            // Have to change the Delay, Speed and Direction based on what we observe
-            largeRegulatedMotor.setSpeed(200);
+        returnToStart();
+        moveSorter(300, 800, true);
+        dispenseObject();
+    }
+
+    public void moveSorter(int speed, int duration, boolean directionForwards) {
+        largeRegulatedMotor.setSpeed(speed);
+        if (directionForwards) {
             largeRegulatedMotor.forward();
-            Delay.msDelay(200);
-            mediumRegulatedMotor.setAcceleration(10);
-            mediumRegulatedMotor.forward();
-            Delay.msDelay(200);
+        } else {
+            largeRegulatedMotor.backward();
         }
+
+        Delay.msDelay(duration);
+    }
+
+    public void dispenseObject() {
+        mediumRegulatedMotor.setSpeed(150);
+        mediumRegulatedMotor.backward();
+        Delay.msDelay(700);
+
+        while (!mediumRegulatedMotor.isStalled()) {
+            mediumRegulatedMotor.setSpeed(150);
+            mediumRegulatedMotor.forward();
+        }
+    }
+
+    public void resetObjectDispenser() {
+        while (!mediumRegulatedMotor.isStalled()) {
+            mediumRegulatedMotor.setSpeed(150);
+            mediumRegulatedMotor.forward();
+        }
+    }
+
+    public void returnToStart() {
+        while (!touchSensor.isPressed()) {
+            moveSorter(300, 5, false);
+        }
+    }
+
+    public void resetPositions() {
+        returnToStart();
+        resetObjectDispenser();
     }
 
     // A method that prints the colour of the scanned objects
@@ -109,7 +103,7 @@ public class LegoRobot {
         // Returns a float from 0 to 7
         colorSensor.fetchSample(colorSample, 0);
 
-        String[] colors = {"NONE", "BLACK", "BLUE", "GREEN", "YELLOW", "RED", "WHITE", "Brown"};
+        String[] colors = {"NONE", "BLACK", "BLUE", "GREEN", "YELLOW", "RED", "WHITE", "BROWN"};
 
         // Returns a String from the colors array based on what float it fetches, converted to int
         return colors[(int) colorSample[0]];
@@ -117,16 +111,30 @@ public class LegoRobot {
 
     public static void main(String[] args) {
         LegoRobot robot = new LegoRobot();
-        while (true) {
+
+        robot.resetPositions();
+
+        while (!robot.getColour().equals("BLACK")) {
             System.out.println(robot.getColour());
-            Delay.msDelay(1000);
 
-            robot.sortBlue();
-            robot.sortGreen();
-            robot.sortYellow();
-            robot.sortRed();
+            if (robot.getColour().equals("BLUE")) {
+                System.out.println("Sorting BLUE");
 
+                robot.returnToStart();
+                System.out.println("Returned to start");
+                robot.moveSorter(300, 50, true);
+                System.out.println("Moved to sorting position");
+                robot.dispenseObject();
+                System.out.println("Dispensed object");
+            } else if (robot.getColour().equals("GREEN")) {
+                robot.sortGreen();
+            } else if (robot.getColour().equals("RED")) {
+                robot.sortRed();
+            } else if (robot.getColour().equals("YELLOW")) {
+                robot.sortYellow();
+            } else {
+                System.out.println("UNKNOWN COLOR");
+            }
         }
-
     }
 }
