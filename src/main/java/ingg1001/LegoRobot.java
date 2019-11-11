@@ -66,10 +66,33 @@ public class LegoRobot {
         Delay.msDelay(duration);
     }
 
+    public void dispenseObject() {
+        mediumRegulatedMotor.setSpeed(150);
+        mediumRegulatedMotor.backward();
+        Delay.msDelay(700);
+
+        while (!mediumRegulatedMotor.isStalled()) {
+            mediumRegulatedMotor.setSpeed(150);
+            mediumRegulatedMotor.forward();
+        }
+    }
+
+    public void resetObjectDispenser() {
+        while (!mediumRegulatedMotor.isStalled()) {
+            mediumRegulatedMotor.setSpeed(150);
+            mediumRegulatedMotor.forward();
+        }
+    }
+
     public void returnToStart() {
         while (!touchSensor.isPressed()) {
             moveSorter(300, 5, false);
         }
+    }
+
+    public void resetPositions() {
+        returnToStart();
+        resetObjectDispenser();
     }
 
     // A method that prints the colour of the scanned objects
