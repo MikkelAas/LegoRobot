@@ -113,15 +113,30 @@ public class LegoRobot {
 
     public static void main(String[] args) {
         LegoRobot robot = new LegoRobot();
-        while (true) {
+
+        robot.resetPositions();
+
+        while (!robot.getColour().equals("BLACK")) {
             System.out.println(robot.getColour());
-            Delay.msDelay(1000);
 
-            robot.sortBlue();
-            robot.sortGreen();
-            robot.sortYellow();
-            robot.sortRed();
+            if (robot.getColour().equals("BLUE")) {
+                System.out.println("Sorting BLUE");
 
+                robot.returnToStart();
+                System.out.println("Returned to start");
+                robot.moveSorter(300, 50, true);
+                System.out.println("Moved to sorting position");
+                robot.dispenseObject();
+                System.out.println("Dispensed object");
+            } else if (robot.getColour().equals("GREEN")) {
+                robot.sortGreen();
+            } else if (robot.getColour().equals("RED")) {
+                robot.sortRed();
+            } else if (robot.getColour().equals("YELLOW")) {
+                robot.sortYellow();
+            } else {
+                System.out.println("UNKNOWN COLOR");
+            }
         }
     }
 }
