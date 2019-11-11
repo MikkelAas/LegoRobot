@@ -32,7 +32,9 @@ public class LegoRobot {
         // Returns to a prefixed position, write once, use it A LOT
     }
 
-    // A method that sorts by Blue
+    /**
+     * This method sorts
+     */
     public void sortBlue(){
         /* If the color is blue, move to a fixed position and the deposit the green matter before returning to the
         default position
