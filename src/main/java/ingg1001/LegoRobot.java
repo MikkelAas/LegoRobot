@@ -72,128 +72,133 @@ public class LegoRobot {
 
                 System.out.println(color);
 
-                if (color.equals("BLUE")) {
-                    // go back to start
-                    while (!touchSensor.isPressed()) {
+                switch (color) {
+                    case "BLUE":
+                        // go back to start
+                        while (!touchSensor.isPressed()) {
+                            largeRegulatedMotor.setSpeed(150);
+                            largeRegulatedMotor.backward();
+                        }
+                        largeRegulatedMotor.stop();
+
+                        // dispense that shit
+                        mediumRegulatedMotor.setSpeed(250);
+                        mediumRegulatedMotor.backward();
+                        Delay.msDelay(1000);
+                        mediumRegulatedMotor.stop();
+
+                        // reset dispenser
+                        while (!mediumRegulatedMotor.isStalled()) {
+                            mediumRegulatedMotor.setSpeed(150);
+                            mediumRegulatedMotor.forward();
+                        }
+                        mediumRegulatedMotor.stop();
+                        break;
+                    case "GREEN":
+                        // go back to start
+                        while (!touchSensor.isPressed()) {
+                            largeRegulatedMotor.setSpeed(150);
+                            largeRegulatedMotor.backward();
+                        }
+                        largeRegulatedMotor.stop();
+
+                        // move to dispense location
                         largeRegulatedMotor.setSpeed(150);
-                        largeRegulatedMotor.backward();
-                    }
-                    largeRegulatedMotor.stop();
+                        largeRegulatedMotor.forward();
+                        Delay.msDelay(1000);
+                        largeRegulatedMotor.stop();
+                        Delay.msDelay(1000);
 
-                    // dispense that shit
-                    mediumRegulatedMotor.setSpeed(250);
-                    mediumRegulatedMotor.backward();
-                    Delay.msDelay(1000);
-                    mediumRegulatedMotor.stop();
+                        // dispense that shit
+                        mediumRegulatedMotor.setSpeed(250);
+                        mediumRegulatedMotor.backward();
+                        Delay.msDelay(1000);
+                        mediumRegulatedMotor.stop();
 
-                    // reset dispenser
-                    while (!mediumRegulatedMotor.isStalled()) {
-                        mediumRegulatedMotor.setSpeed(150);
-                        mediumRegulatedMotor.forward();
-                    }
-                    mediumRegulatedMotor.stop();
-                } else if (color.equals("GREEN")) {
-                    // go back to start
-                    while (!touchSensor.isPressed()) {
+                        // reset dispenser
+                        while (!mediumRegulatedMotor.isStalled()) {
+                            mediumRegulatedMotor.setSpeed(150);
+                            mediumRegulatedMotor.forward();
+                        }
+                        mediumRegulatedMotor.stop();
+
+                        // go back to start
+                        while (!touchSensor.isPressed()) {
+                            largeRegulatedMotor.setSpeed(150);
+                            largeRegulatedMotor.backward();
+                        }
+                        largeRegulatedMotor.stop();
+                        break;
+                    case "RED":
+                        // go back to start
+                        while (!touchSensor.isPressed()) {
+                            largeRegulatedMotor.setSpeed(150);
+                            largeRegulatedMotor.backward();
+                        }
+                        largeRegulatedMotor.stop();
+
+                        // move to dispense location
                         largeRegulatedMotor.setSpeed(150);
-                        largeRegulatedMotor.backward();
-                    }
-                    largeRegulatedMotor.stop();
+                        largeRegulatedMotor.forward();
+                        Delay.msDelay(1900);
+                        largeRegulatedMotor.stop();
+                        Delay.msDelay(1000);
 
-                    // move to dispense location
-                    largeRegulatedMotor.setSpeed(150);
-                    largeRegulatedMotor.forward();
-                    Delay.msDelay(1000);
-                    largeRegulatedMotor.stop();
-                    Delay.msDelay(1000);
+                        // dispense that shit
+                        mediumRegulatedMotor.setSpeed(250);
+                        mediumRegulatedMotor.backward();
+                        Delay.msDelay(1000);
+                        mediumRegulatedMotor.stop();
 
-                    // dispense that shit
-                    mediumRegulatedMotor.setSpeed(250);
-                    mediumRegulatedMotor.backward();
-                    Delay.msDelay(1000);
-                    mediumRegulatedMotor.stop();
+                        // reset dispenser
+                        while (!mediumRegulatedMotor.isStalled()) {
+                            mediumRegulatedMotor.setSpeed(150);
+                            mediumRegulatedMotor.forward();
+                        }
+                        mediumRegulatedMotor.stop();
 
-                    // reset dispenser
-                    while (!mediumRegulatedMotor.isStalled()) {
-                        mediumRegulatedMotor.setSpeed(150);
-                        mediumRegulatedMotor.forward();
-                    }
-                    mediumRegulatedMotor.stop();
+                        // go back to start
+                        while (!touchSensor.isPressed()) {
+                            largeRegulatedMotor.setSpeed(150);
+                            largeRegulatedMotor.backward();
+                        }
+                        largeRegulatedMotor.stop();
+                        break;
+                    case "YELLOW":
+                        // go back to start
+                        while (!touchSensor.isPressed()) {
+                            largeRegulatedMotor.setSpeed(150);
+                            largeRegulatedMotor.backward();
+                        }
+                        largeRegulatedMotor.stop();
 
-                    // go back to start
-                    while (!touchSensor.isPressed()) {
+                        // move to dispense location
                         largeRegulatedMotor.setSpeed(150);
-                        largeRegulatedMotor.backward();
-                    }
-                    largeRegulatedMotor.stop();
-                } else if (color.equals("RED")) {
-                    // go back to start
-                    while (!touchSensor.isPressed()) {
-                        largeRegulatedMotor.setSpeed(150);
-                        largeRegulatedMotor.backward();
-                    }
-                    largeRegulatedMotor.stop();
+                        largeRegulatedMotor.forward();
+                        Delay.msDelay(2800);
+                        largeRegulatedMotor.stop();
+                        Delay.msDelay(1000);
 
-                    // move to dispense location
-                    largeRegulatedMotor.setSpeed(150);
-                    largeRegulatedMotor.forward();
-                    Delay.msDelay(1900);
-                    largeRegulatedMotor.stop();
-                    Delay.msDelay(1000);
+                        // dispense that shit
+                        mediumRegulatedMotor.setSpeed(250);
+                        mediumRegulatedMotor.backward();
+                        Delay.msDelay(1000);
+                        mediumRegulatedMotor.stop();
 
-                    // dispense that shit
-                    mediumRegulatedMotor.setSpeed(250);
-                    mediumRegulatedMotor.backward();
-                    Delay.msDelay(1000);
-                    mediumRegulatedMotor.stop();
+                        // reset dispenser
+                        while (!mediumRegulatedMotor.isStalled()) {
+                            mediumRegulatedMotor.setSpeed(150);
+                            mediumRegulatedMotor.forward();
+                        }
+                        mediumRegulatedMotor.stop();
 
-                    // reset dispenser
-                    while (!mediumRegulatedMotor.isStalled()) {
-                        mediumRegulatedMotor.setSpeed(150);
-                        mediumRegulatedMotor.forward();
-                    }
-                    mediumRegulatedMotor.stop();
-
-                    // go back to start
-                    while (!touchSensor.isPressed()) {
-                        largeRegulatedMotor.setSpeed(150);
-                        largeRegulatedMotor.backward();
-                    }
-                    largeRegulatedMotor.stop();
-                } else if (color.equals("YELLOW")) {
-                    // go back to start
-                    while (!touchSensor.isPressed()) {
-                        largeRegulatedMotor.setSpeed(150);
-                        largeRegulatedMotor.backward();
-                    }
-                    largeRegulatedMotor.stop();
-
-                    // move to dispense location
-                    largeRegulatedMotor.setSpeed(150);
-                    largeRegulatedMotor.forward();
-                    Delay.msDelay(2800);
-                    largeRegulatedMotor.stop();
-                    Delay.msDelay(1000);
-
-                    // dispense that shit
-                    mediumRegulatedMotor.setSpeed(250);
-                    mediumRegulatedMotor.backward();
-                    Delay.msDelay(1000);
-                    mediumRegulatedMotor.stop();
-
-                    // reset dispenser
-                    while (!mediumRegulatedMotor.isStalled()) {
-                        mediumRegulatedMotor.setSpeed(150);
-                        mediumRegulatedMotor.forward();
-                    }
-                    mediumRegulatedMotor.stop();
-
-                    // go back to start
-                    while (!touchSensor.isPressed()) {
-                        largeRegulatedMotor.setSpeed(150);
-                        largeRegulatedMotor.backward();
-                    }
-                    largeRegulatedMotor.stop();
+                        // go back to start
+                        while (!touchSensor.isPressed()) {
+                            largeRegulatedMotor.setSpeed(150);
+                            largeRegulatedMotor.backward();
+                        }
+                        largeRegulatedMotor.stop();
+                        break;
                 }
             }
 
