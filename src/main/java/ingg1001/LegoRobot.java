@@ -22,10 +22,10 @@ import lejos.utility.Delay;
 public class LegoRobot {
 
     // Making objects of the hardware in use
-    public static final EV3LargeRegulatedMotor largeRegulatedMotor = new EV3LargeRegulatedMotor(MotorPort.A);
-    public static final EV3ColorSensor colorSensor = new EV3ColorSensor(SensorPort.S1);
-    public static final EV3TouchSensor touchSensor = new EV3TouchSensor(SensorPort.S2);
-    public static final EV3MediumRegulatedMotor mediumRegulatedMotor = new EV3MediumRegulatedMotor(MotorPort.B);
+    private static final EV3LargeRegulatedMotor largeRegulatedMotor = new EV3LargeRegulatedMotor(MotorPort.A);
+    private static final EV3ColorSensor colorSensor = new EV3ColorSensor(SensorPort.S1);
+    private static final EV3TouchSensor touchSensor = new EV3TouchSensor(SensorPort.S2);
+    private static final EV3MediumRegulatedMotor mediumRegulatedMotor = new EV3MediumRegulatedMotor(MotorPort.B);
 
     public static void main(String[] args) {
         // go back to start
