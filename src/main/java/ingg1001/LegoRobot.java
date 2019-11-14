@@ -28,6 +28,24 @@ public class LegoRobot {
     private static final EV3MediumRegulatedMotor mediumRegulatedMotor = new EV3MediumRegulatedMotor(MotorPort.B);
     private static final LegoRobot robot = new LegoRobot();
 
+    private enum Level {
+        BLUE(0),
+        GREEN(225),
+        RED(550),
+        YELLOW(775);
+
+        private final int moveDistance;
+
+        Level(int moveDistance) {
+            this.moveDistance = moveDistance;
+        }
+
+        public int getLevelCode() {
+            return this.moveDistance;
+        }
+
+    }
+
     public void moveSorter(int speed, boolean directionForwards) {
         largeRegulatedMotor.setSpeed(speed);
         if (directionForwards) {
