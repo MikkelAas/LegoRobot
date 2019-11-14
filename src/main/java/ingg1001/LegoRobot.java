@@ -147,7 +147,7 @@ public class LegoRobot {
         while (true) {
             int currentColor = robot.getColorID();
 
-            switch (robot.getColorID()) {
+            switch (currentColor) {
                 case 2: // BLUE
                     robot.sortColor(MoveDistances.BLUE.getMoveDistance(), currentColor);
                     System.out.println(colors[currentColor]);
