@@ -47,7 +47,11 @@ public class LegoRobot {
         public int getMoveDistance() {
             return this.moveDistance;
         }
+    }
 
+    public void init() {
+        robot.resetDispenserRotation();
+        robot.resetSorterPosition();
     }
 
     public void moveSorter(int speed, boolean directionForwards) {
@@ -59,53 +63,57 @@ public class LegoRobot {
         }
     }
 
-    public void resetDispenser() {
+    public void resetSorterPosition() {
+        // go back to start
+        while (!touchSensor.isPressed()) {
+            robot.moveSorter(600, false);
+        }
+        largeRegulatedMotor.stop();
+    }
+
+    public void resetDispenserRotation() {
         while (!mediumRegulatedMotor.isStalled()) {
             mediumRegulatedMotor.setSpeed(150);
             mediumRegulatedMotor.forward();
         }
+        mediumRegulatedMotor.stop();
     }
 
     public void dispense() {
         mediumRegulatedMotor.setSpeed(250);
         mediumRegulatedMotor.backward();
         Delay.msDelay(1000);
+        mediumRegulatedMotor.stop();
     }
 
     public void sortColor(int delay, int currentColor) {
         // move to dispense location
         robot.moveSorter(600, true);
         Delay.msDelay(delay);
-        largeRegulatedMotor.stop();
 
         // chill
         Delay.msDelay(250);
 
         // dispense that shit
         robot.dispense();
-        mediumRegulatedMotor.stop();
 
         // reset dispenser
-        robot.resetDispenser();
-        mediumRegulatedMotor.stop();
+        robot.resetDispenserRotation();
 
         if (robot.getColorID() == currentColor) {
             System.out.println("Sorted double!");
 
             // dispense that shit
             robot.dispense();
-            mediumRegulatedMotor.stop();
 
             // reset dispenser
-            robot.resetDispenser();
-            mediumRegulatedMotor.stop();
+            robot.resetDispenserRotation();
         }
 
         // go back to start
         while (!touchSensor.isPressed()) {
             robot.moveSorter(600, false);
         }
-        largeRegulatedMotor.stop();
     }
 
     public int getColorID() {
@@ -122,16 +130,6 @@ public class LegoRobot {
     }
 
     public static void main(String[] args) {
-
-        // go back to start
-        while (!touchSensor.isPressed()) {
-            robot.moveSorter(600, false);
-        }
-        largeRegulatedMotor.stop();
-
-        // reset dispenser
-        robot.resetDispenser();
-        mediumRegulatedMotor.stop();
 
         while (true) {
             int currentColor = robot.getColorID();
