@@ -26,192 +26,119 @@ public class LegoRobot {
     private static final EV3ColorSensor colorSensor = new EV3ColorSensor(SensorPort.S1);
     private static final EV3TouchSensor touchSensor = new EV3TouchSensor(SensorPort.S2);
     private static final EV3MediumRegulatedMotor mediumRegulatedMotor = new EV3MediumRegulatedMotor(MotorPort.B);
+    private static final LegoRobot robot = new LegoRobot();
 
-    public static void main(String[] args) {
-        // go back to start
-        while (!touchSensor.isPressed()) {
-            largeRegulatedMotor.setSpeed(150);
+    public void moveSorter(int speed, boolean directionForwards) {
+        largeRegulatedMotor.setSpeed(speed);
+        if (directionForwards) {
+            largeRegulatedMotor.forward();
+        } else {
             largeRegulatedMotor.backward();
         }
-        largeRegulatedMotor.stop();
+    }
 
-        // reset dispenser
+    public void resetDispenser() {
         while (!mediumRegulatedMotor.isStalled()) {
             mediumRegulatedMotor.setSpeed(150);
             mediumRegulatedMotor.forward();
         }
+    }
+
+    public void dispense() {
+        mediumRegulatedMotor.setSpeed(250);
+        mediumRegulatedMotor.backward();
+        Delay.msDelay(1000);
+    }
+
+    public void sortColor(int delay, String currentColor) {
+        // move to dispense location
+        robot.moveSorter(600, true);
+        Delay.msDelay(delay);
+        largeRegulatedMotor.stop();
+
+        // chill
+        Delay.msDelay(250);
+
+        // dispense that shit
+        robot.dispense();
+        mediumRegulatedMotor.stop();
+
+        // reset dispenser
+        robot.resetDispenser();
+        mediumRegulatedMotor.stop();
+
+        if (robot.getColour().equals(currentColor)) {
+            // dispense that shit
+            robot.dispense();
+            mediumRegulatedMotor.stop();
+
+            // reset dispenser
+            robot.resetDispenser();
+            mediumRegulatedMotor.stop();
+        }
+
+        // go back to start
+        while (!touchSensor.isPressed()) {
+            robot.moveSorter(600, false);
+        }
+        largeRegulatedMotor.stop();
+    }
+
+    public String getColour() {
+        colorSensor.getColorIDMode();
+
+        // A float array that holds the samples
+        float[] colorSample = new float[colorSensor.sampleSize()];
+
+        // Returns a float from 0 to 7
+        colorSensor.fetchSample(colorSample, 0);
+
+        String[] colors = {"NONE", "BLACK", "BLUE", "GREEN", "YELLOW", "RED", "WHITE", "BROWN"};
+
+        // Returns a String from the colors array based on what float it fetches, converted to int
+        return colors[(int) colorSample[0]];
+    }
+
+    public static void main(String[] args) {
+
+        // go back to start
+        while (!touchSensor.isPressed()) {
+            robot.moveSorter(600, false);
+        }
+        largeRegulatedMotor.stop();
+
+        // reset dispenser
+        robot.resetDispenser();
         mediumRegulatedMotor.stop();
 
         int blackCounter = 0;
 
         while (true) {
-            colorSensor.getColorIDMode();
-
-            // A float array that holds the samples
-            float[] colorSample = new float[colorSensor.sampleSize()];
-
-            // Returns a float from 0 to 7
-            colorSensor.fetchSample(colorSample, 0);
-
-            String[] colors = {"NONE", "BLACK", "BLUE", "GREEN", "YELLOW", "RED", "WHITE", "BROWN"};
-
-            // Returns a String from the colors array based on what float it fetches, converted to int
-            String color = colors[(int) colorSample[0]];
-
-            while (!color.equals("BLACK")) {
-                colorSensor.getColorIDMode();
-
-                // A float array that holds the samples
-                colorSample = new float[colorSensor.sampleSize()];
-
-                // Returns a float from 0 to 7
-                colorSensor.fetchSample(colorSample, 0);
-
-                // Returns a String from the colors array based on what float it fetches, converted to int
-                color = colors[(int) colorSample[0]];
-
-                System.out.println(color);
-
-                switch (color) {
+            while (!robot.getColour().equals("BLACK")) {
+                switch (robot.getColour()) {
                     case "BLUE":
-                        // go back to start
-                        while (!touchSensor.isPressed()) {
-                            largeRegulatedMotor.setSpeed(150);
-                            largeRegulatedMotor.backward();
-                        }
-                        largeRegulatedMotor.stop();
-
-                        // dispense that shit
-                        mediumRegulatedMotor.setSpeed(250);
-                        mediumRegulatedMotor.backward();
-                        Delay.msDelay(1000);
-                        mediumRegulatedMotor.stop();
-
-                        // reset dispenser
-                        while (!mediumRegulatedMotor.isStalled()) {
-                            mediumRegulatedMotor.setSpeed(150);
-                            mediumRegulatedMotor.forward();
-                        }
-                        mediumRegulatedMotor.stop();
+                        robot.sortColor(0, robot.getColour());
                         break;
                     case "GREEN":
-                        // go back to start
-                        while (!touchSensor.isPressed()) {
-                            largeRegulatedMotor.setSpeed(150);
-                            largeRegulatedMotor.backward();
-                        }
-                        largeRegulatedMotor.stop();
-
-                        // move to dispense location
-                        largeRegulatedMotor.setSpeed(150);
-                        largeRegulatedMotor.forward();
-                        Delay.msDelay(1000);
-                        largeRegulatedMotor.stop();
-                        Delay.msDelay(1000);
-
-                        // dispense that shit
-                        mediumRegulatedMotor.setSpeed(250);
-                        mediumRegulatedMotor.backward();
-                        Delay.msDelay(1000);
-                        mediumRegulatedMotor.stop();
-
-                        // reset dispenser
-                        while (!mediumRegulatedMotor.isStalled()) {
-                            mediumRegulatedMotor.setSpeed(150);
-                            mediumRegulatedMotor.forward();
-                        }
-                        mediumRegulatedMotor.stop();
-
-                        // go back to start
-                        while (!touchSensor.isPressed()) {
-                            largeRegulatedMotor.setSpeed(150);
-                            largeRegulatedMotor.backward();
-                        }
-                        largeRegulatedMotor.stop();
+                        robot.sortColor(225, robot.getColour());
                         break;
                     case "RED":
-                        // go back to start
-                        while (!touchSensor.isPressed()) {
-                            largeRegulatedMotor.setSpeed(150);
-                            largeRegulatedMotor.backward();
-                        }
-                        largeRegulatedMotor.stop();
-
-                        // move to dispense location
-                        largeRegulatedMotor.setSpeed(150);
-                        largeRegulatedMotor.forward();
-                        Delay.msDelay(1900);
-                        largeRegulatedMotor.stop();
-                        Delay.msDelay(1000);
-
-                        // dispense that shit
-                        mediumRegulatedMotor.setSpeed(250);
-                        mediumRegulatedMotor.backward();
-                        Delay.msDelay(1000);
-                        mediumRegulatedMotor.stop();
-
-                        // reset dispenser
-                        while (!mediumRegulatedMotor.isStalled()) {
-                            mediumRegulatedMotor.setSpeed(150);
-                            mediumRegulatedMotor.forward();
-                        }
-                        mediumRegulatedMotor.stop();
-
-                        // go back to start
-                        while (!touchSensor.isPressed()) {
-                            largeRegulatedMotor.setSpeed(150);
-                            largeRegulatedMotor.backward();
-                        }
-                        largeRegulatedMotor.stop();
+                        robot.sortColor(550, robot.getColour());
                         break;
                     case "YELLOW":
-                        // go back to start
-                        while (!touchSensor.isPressed()) {
-                            largeRegulatedMotor.setSpeed(150);
-                            largeRegulatedMotor.backward();
-                        }
-                        largeRegulatedMotor.stop();
-
-                        // move to dispense location
-                        largeRegulatedMotor.setSpeed(150);
-                        largeRegulatedMotor.forward();
-                        Delay.msDelay(2800);
-                        largeRegulatedMotor.stop();
-                        Delay.msDelay(1000);
-
-                        // dispense that shit
-                        mediumRegulatedMotor.setSpeed(250);
-                        mediumRegulatedMotor.backward();
-                        Delay.msDelay(1000);
-                        mediumRegulatedMotor.stop();
-
-                        // reset dispenser
-                        while (!mediumRegulatedMotor.isStalled()) {
-                            mediumRegulatedMotor.setSpeed(150);
-                            mediumRegulatedMotor.forward();
-                        }
-                        mediumRegulatedMotor.stop();
-
-                        // go back to start
-                        while (!touchSensor.isPressed()) {
-                            largeRegulatedMotor.setSpeed(150);
-                            largeRegulatedMotor.backward();
-                        }
-                        largeRegulatedMotor.stop();
+                        robot.sortColor(775, robot.getColour()); // 825?
                         break;
                 }
             }
 
             Delay.msDelay(1000);
+
             blackCounter++;
             System.out.println(blackCounter);
 
             if (blackCounter == 5) {
                 // reset dispenser
-                while (!mediumRegulatedMotor.isStalled()) {
-                    mediumRegulatedMotor.setSpeed(150);
-                    mediumRegulatedMotor.forward();
-                }
+                robot.resetDispenser();
                 mediumRegulatedMotor.stop();
 
                 blackCounter = 0;
