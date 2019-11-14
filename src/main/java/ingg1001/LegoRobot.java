@@ -20,10 +20,25 @@ import lejos.utility.Delay;
  */
 
 public class LegoRobot {
+    /**
+     * Creates a new instance of the EV3 large regulated motor, that connects to the motor port: A.
+     */
     private static final EV3LargeRegulatedMotor largeRegulatedMotor = new EV3LargeRegulatedMotor(MotorPort.A);
+    /**
+     * Creates a nw instance of the EV3 color sensor, that connnects to the sensor port: S1.
+     */
     private static final EV3ColorSensor colorSensor = new EV3ColorSensor(SensorPort.S1);
+    /**
+     * Creates a new instance of the EV3 touch sensor, that connects to the sensor port: S2.
+     */
     private static final EV3TouchSensor touchSensor = new EV3TouchSensor(SensorPort.S2);
+    /**
+     * Creates a new instance of the EV3 medium regulated motor, that connects to the motor port: B.
+     */
     private static final EV3MediumRegulatedMotor mediumRegulatedMotor = new EV3MediumRegulatedMotor(MotorPort.B);
+    /**
+     * Creates a new robot object that is used to perform the methods of the class.
+     */
     private static final LegoRobot robot = new LegoRobot();
 
     private void moveSorter(int speed, boolean directionForwards) {
