@@ -13,6 +13,7 @@ import lejos.utility.Delay;
 
 /**
  * Class for robot that sorts colours
+ *
  * @author Aas, Mikkel
  * @author Karlsmoen, F. Jakob
  * @author Ronning-nyvold, Petter
@@ -28,19 +29,22 @@ public class LegoRobot {
     private static final EV3MediumRegulatedMotor mediumRegulatedMotor = new EV3MediumRegulatedMotor(MotorPort.B);
     private static final LegoRobot robot = new LegoRobot();
 
-    private enum Level {
+    private static final String[] colors = {"NONE", "BLACK", "BLUE", "GREEN", "YELLOW", "RED", "WHITE", "BROWN"};
+
+
+    private enum MoveDistances {
         BLUE(0),
         GREEN(225),
-        RED(550),
-        YELLOW(775);
+        YELLOW(550),
+        RED(775);
 
         private final int moveDistance;
 
-        Level(int moveDistance) {
+        MoveDistances(int moveDistance) {
             this.moveDistance = moveDistance;
         }
 
-        public int getLevelCode() {
+        public int getMoveDistance() {
             return this.moveDistance;
         }
 
@@ -68,7 +72,7 @@ public class LegoRobot {
         Delay.msDelay(1000);
     }
 
-    public void sortColor(int delay, String currentColor) {
+    public void sortColor(int delay, int currentColor) {
         // move to dispense location
         robot.moveSorter(600, true);
         Delay.msDelay(delay);
@@ -85,7 +89,9 @@ public class LegoRobot {
         robot.resetDispenser();
         mediumRegulatedMotor.stop();
 
-        if (robot.getColour().equals(currentColor)) {
+        if (robot.getColorID() == currentColor) {
+            System.out.println("Sorted double!");
+
             // dispense that shit
             robot.dispense();
             mediumRegulatedMotor.stop();
@@ -102,7 +108,7 @@ public class LegoRobot {
         largeRegulatedMotor.stop();
     }
 
-    public String getColour() {
+    public int getColorID() {
         colorSensor.getColorIDMode();
 
         // A float array that holds the samples
@@ -111,10 +117,8 @@ public class LegoRobot {
         // Returns a float from 0 to 7
         colorSensor.fetchSample(colorSample, 0);
 
-        String[] colors = {"NONE", "BLACK", "BLUE", "GREEN", "YELLOW", "RED", "WHITE", "BROWN"};
-
         // Returns a String from the colors array based on what float it fetches, converted to int
-        return colors[(int) colorSample[0]];
+        return (int) colorSample[0];
     }
 
     public static void main(String[] args) {
@@ -129,37 +133,24 @@ public class LegoRobot {
         robot.resetDispenser();
         mediumRegulatedMotor.stop();
 
-        int blackCounter = 0;
-
         while (true) {
-            while (!robot.getColour().equals("BLACK")) {
-                switch (robot.getColour()) {
-                    case "BLUE":
-                        robot.sortColor(0, robot.getColour());
-                        break;
-                    case "GREEN":
-                        robot.sortColor(225, robot.getColour());
-                        break;
-                    case "RED":
-                        robot.sortColor(550, robot.getColour());
-                        break;
-                    case "YELLOW":
-                        robot.sortColor(775, robot.getColour()); // 825?
-                        break;
-                }
-            }
+            int currentColor = robot.getColorID();
 
-            Delay.msDelay(1000);
+            System.out.println(colors[currentColor]);
 
-            blackCounter++;
-            System.out.println(blackCounter);
-
-            if (blackCounter == 5) {
-                // reset dispenser
-                robot.resetDispenser();
-                mediumRegulatedMotor.stop();
-
-                blackCounter = 0;
+            switch (robot.getColorID()) {
+                case 2: // BLUE
+                    robot.sortColor(MoveDistances.BLUE.getMoveDistance(), currentColor);
+                    break;
+                case 3:
+                    robot.sortColor(MoveDistances.GREEN.getMoveDistance(), currentColor);
+                    break;
+                case 4:
+                    robot.sortColor(MoveDistances.YELLOW.getMoveDistance(), currentColor);
+                    break;
+                case 5:
+                    robot.sortColor(MoveDistances.RED.getMoveDistance(), currentColor);
+                    break;
             }
         }
     }
