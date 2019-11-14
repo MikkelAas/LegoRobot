@@ -20,15 +20,13 @@ import lejos.utility.Delay;
  */
 
 public class LegoRobot {
-
-    // Making objects of the hardware in use
     private static final EV3LargeRegulatedMotor largeRegulatedMotor = new EV3LargeRegulatedMotor(MotorPort.A);
     private static final EV3ColorSensor colorSensor = new EV3ColorSensor(SensorPort.S1);
     private static final EV3TouchSensor touchSensor = new EV3TouchSensor(SensorPort.S2);
     private static final EV3MediumRegulatedMotor mediumRegulatedMotor = new EV3MediumRegulatedMotor(MotorPort.B);
     private static final LegoRobot robot = new LegoRobot();
 
-    public void moveSorter(int speed, boolean directionForwards) {
+    private void moveSorter(int speed, boolean directionForwards) {
         largeRegulatedMotor.setSpeed(speed);
         if (directionForwards) {
             largeRegulatedMotor.forward();
@@ -37,20 +35,20 @@ public class LegoRobot {
         }
     }
 
-    public void resetDispenser() {
+    private void resetDispenser() {
         while (!mediumRegulatedMotor.isStalled()) {
             mediumRegulatedMotor.setSpeed(150);
             mediumRegulatedMotor.forward();
         }
     }
 
-    public void dispense() {
+    private void dispense() {
         mediumRegulatedMotor.setSpeed(250);
         mediumRegulatedMotor.backward();
         Delay.msDelay(1000);
     }
 
-    public void sortColor(int delay, String currentColor) {
+    private void sortColor(int delay, String currentColor) {
         // move to dispense location
         robot.moveSorter(600, true);
         Delay.msDelay(delay);
@@ -84,7 +82,7 @@ public class LegoRobot {
         largeRegulatedMotor.stop();
     }
 
-    public String getColour() {
+    private String getColour() {
         colorSensor.getColorIDMode();
 
         // A float array that holds the samples
