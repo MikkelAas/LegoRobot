@@ -34,9 +34,9 @@ public class LegoRobot {
 
     private enum MoveDistances {
         BLUE(0),
-        GREEN(225),
-        YELLOW(550),
-        RED(775);
+        GREEN(150),
+        YELLOW(450),
+        RED(750);
 
         private final int moveDistance;
 
@@ -90,30 +90,38 @@ public class LegoRobot {
         // move to dispense location
         robot.moveSorter(600, true);
         Delay.msDelay(delay);
+        largeRegulatedMotor.stop();
 
         // chill
         Delay.msDelay(250);
 
         // dispense that shit
         robot.dispense();
+        mediumRegulatedMotor.stop();
 
         // reset dispenser
         robot.resetDispenserRotation();
+        mediumRegulatedMotor.stop();
+
+        Delay.msDelay(250);
 
         if (robot.getColorID() == currentColor) {
             System.out.println("Sorted double!");
 
             // dispense that shit
             robot.dispense();
+            mediumRegulatedMotor.stop();
 
             // reset dispenser
             robot.resetDispenserRotation();
+            mediumRegulatedMotor.stop();
         }
 
         // go back to start
         while (!touchSensor.isPressed()) {
             robot.moveSorter(600, false);
         }
+        largeRegulatedMotor.stop();
     }
 
     public int getColorID() {
@@ -130,24 +138,31 @@ public class LegoRobot {
     }
 
     public static void main(String[] args) {
+        robot.resetSorterPosition();
+        mediumRegulatedMotor.stop();
+        robot.resetDispenserRotation();
+        largeRegulatedMotor.stop();
+
 
         while (true) {
             int currentColor = robot.getColorID();
 
-            System.out.println(colors[currentColor]);
-
             switch (robot.getColorID()) {
                 case 2: // BLUE
                     robot.sortColor(MoveDistances.BLUE.getMoveDistance(), currentColor);
+                    System.out.println(colors[currentColor]);
                     break;
-                case 3:
+                case 3: // GREEN
                     robot.sortColor(MoveDistances.GREEN.getMoveDistance(), currentColor);
+                    System.out.println(colors[currentColor]);
                     break;
-                case 4:
+                case 4: // YELLOW
                     robot.sortColor(MoveDistances.YELLOW.getMoveDistance(), currentColor);
+                    System.out.println(colors[currentColor]);
                     break;
-                case 5:
+                case 5: // RED
                     robot.sortColor(MoveDistances.RED.getMoveDistance(), currentColor);
+                    System.out.println(colors[currentColor]);
                     break;
             }
         }
