@@ -31,7 +31,6 @@ public class LegoRobot {
 
     private static final String[] colors = {"NONE", "BLACK", "BLUE", "GREEN", "YELLOW", "RED", "WHITE", "BROWN"};
 
-
     private enum MoveDistances {
         BLUE(0),
         GREEN(150),
