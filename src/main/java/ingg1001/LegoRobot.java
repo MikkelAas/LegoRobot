@@ -25,7 +25,7 @@ public class LegoRobot {
     /**
      * Creates a new instance of the EV3 large regulated motor that is connected to motor port: A.
      */
-    private static final EV3LargeRegulatedMotor largeRegulatedMotor = new EV3LargeRegulatedMotor(MotorPort.A);Creates a new instance of the EV3
+    private static final EV3LargeRegulatedMotor largeRegulatedMotor = new EV3LargeRegulatedMotor(MotorPort.A);
     /**
      * Creates a new instance of the EV3 color sensor that is connected to sensor port: S1.
      */
