@@ -71,7 +71,7 @@ public class LegoRobot {
     /**
      * A method that resets the dispenser rotation and sorter position.
      */
-    public void init() {
+    private void init() {
         robot.resetDispenserRotation();
         robot.resetSorterPosition();
     }
@@ -81,7 +81,7 @@ public class LegoRobot {
      * @param speed Takes a speed parameter of type int, that sets the speed of the sorter
      * @param directionForwards Takes a direction boolean that decides whether the sorter should move backward or forward.
      */
-    public void moveSorter(int speed, boolean directionForwards) {
+    private void moveSorter(int speed, boolean directionForwards) {
         largeRegulatedMotor.setSpeed(speed);
         if (directionForwards) {
             largeRegulatedMotor.forward();
@@ -93,7 +93,7 @@ public class LegoRobot {
     /**
      * Resets the sorter position.
      */
-    public void resetSorterPosition() {
+    private void resetSorterPosition() {
         // go back to start
         while (!touchSensor.isPressed()) {
             robot.moveSorter(600, false);
@@ -104,7 +104,7 @@ public class LegoRobot {
     /**
      * Resets the dispenser rotation
      */
-    public void resetDispenserRotation() {
+    private void resetDispenserRotation() {
         while (!mediumRegulatedMotor.isStalled()) {
             mediumRegulatedMotor.setSpeed(150);
             mediumRegulatedMotor.forward();
@@ -115,7 +115,7 @@ public class LegoRobot {
     /**
      * Dispenses the sorting object.
      */
-    public void dispense() {
+    private void dispense() {
         mediumRegulatedMotor.setSpeed(250);
         mediumRegulatedMotor.backward();
         Delay.msDelay(1000);
@@ -127,7 +127,7 @@ public class LegoRobot {
      * @param delay
      * @param currentColor
      */
-    public void sortColor(int delay, int currentColor) {
+    private void sortColor(int delay, int currentColor) {
         // move to dispense location
         robot.moveSorter(600, true);
         Delay.msDelay(delay);
@@ -169,7 +169,7 @@ public class LegoRobot {
      * Prints the color that the sensor is registering.
      * @return Returns the color as an int.
      */
-    public int getColorID() {
+    private int getColorID() {
         colorSensor.getColorIDMode();
 
         // A float array that holds the samples
