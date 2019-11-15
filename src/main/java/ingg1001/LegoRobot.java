@@ -22,15 +22,35 @@ import lejos.utility.Delay;
 
 public class LegoRobot {
 
-    // Making objects of the hardware in use
-    private static final EV3LargeRegulatedMotor largeRegulatedMotor = new EV3LargeRegulatedMotor(MotorPort.A);
+    /**
+     * Creates a new instance of the EV3 large regulated motor that is connected to motor port: A.
+     */
+    private static final EV3LargeRegulatedMotor largeRegulatedMotor = new EV3LargeRegulatedMotor(MotorPort.A);Creates a new instance of the EV3
+    /**
+     * Creates a new instance of the EV3 color sensor that is connected to sensor port: S1.
+     */
     private static final EV3ColorSensor colorSensor = new EV3ColorSensor(SensorPort.S1);
+    /**
+     * Creates a new instance of the EV3 touch sensor that is connected to sensor port: S2.
+     */
     private static final EV3TouchSensor touchSensor = new EV3TouchSensor(SensorPort.S2);
+    /**
+     * Creates a new instance of the EV3 medium regulated motor that is connected to motor port: B.
+     */
     private static final EV3MediumRegulatedMotor mediumRegulatedMotor = new EV3MediumRegulatedMotor(MotorPort.B);
+    /**
+     * Creates a robot object
+     */
     private static final LegoRobot robot = new LegoRobot();
 
+    /**
+     * Holds a fixed array of Strings with the colors that the color sensor can read
+     */
     private static final String[] colors = {"NONE", "BLACK", "BLUE", "GREEN", "YELLOW", "RED", "WHITE", "BROWN"};
 
+    /**
+     *
+     */
     private enum MoveDistances {
         BLUE(0),
         GREEN(150),
@@ -48,11 +68,19 @@ public class LegoRobot {
         }
     }
 
+    /**
+     * A method that resets the dispenser rotation and sorter position.
+     */
     public void init() {
         robot.resetDispenserRotation();
         robot.resetSorterPosition();
     }
 
+    /**
+     * A method that moves the sorter
+     * @param speed Takes a speed parameter of type int, that sets the speed of the sorter
+     * @param directionForwards Takes a direction boolean that decides whether the sorter should move backward or forward.
+     */
     public void moveSorter(int speed, boolean directionForwards) {
         largeRegulatedMotor.setSpeed(speed);
         if (directionForwards) {
@@ -62,6 +90,9 @@ public class LegoRobot {
         }
     }
 
+    /**
+     * Resets the sorter position.
+     */
     public void resetSorterPosition() {
         // go back to start
         while (!touchSensor.isPressed()) {
@@ -70,6 +101,9 @@ public class LegoRobot {
         largeRegulatedMotor.stop();
     }
 
+    /**
+     * Resets the dispenser rotation
+     */
     public void resetDispenserRotation() {
         while (!mediumRegulatedMotor.isStalled()) {
             mediumRegulatedMotor.setSpeed(150);
@@ -78,6 +112,9 @@ public class LegoRobot {
         mediumRegulatedMotor.stop();
     }
 
+    /**
+     * Dispenses the sorting object.
+     */
     public void dispense() {
         mediumRegulatedMotor.setSpeed(250);
         mediumRegulatedMotor.backward();
@@ -85,6 +122,11 @@ public class LegoRobot {
         mediumRegulatedMotor.stop();
     }
 
+    /**
+     * Sorts based on the color.
+     * @param delay
+     * @param currentColor
+     */
     public void sortColor(int delay, int currentColor) {
         // move to dispense location
         robot.moveSorter(600, true);
@@ -123,6 +165,10 @@ public class LegoRobot {
         largeRegulatedMotor.stop();
     }
 
+    /**
+     * Prints the color that the sensor is registering.
+     * @return Returns the color as an int.
+     */
     public int getColorID() {
         colorSensor.getColorIDMode();
 
