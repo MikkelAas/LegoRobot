@@ -194,6 +194,7 @@ public class LegoRobot {
     }
 
     public static void main(String[] args) {
+        // initialize robot by resetting all position
         robot.init();
         mediumRegulatedMotor.stop();
         largeRegulatedMotor.stop();
