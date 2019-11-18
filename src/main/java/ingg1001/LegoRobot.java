@@ -59,7 +59,7 @@ public class LegoRobot {
          * Method in enum to return the defined move distance for the different colors
          * @return The distance for the sorter to move as int
          */
-        public int getMoveDistance() {
+        int getMoveDistance() {
             return this.moveDistance;
         }
     }
@@ -67,7 +67,7 @@ public class LegoRobot {
     /**
      * Initializes robot by resetting all positions
      */
-    public void init() {
+    private void init() {
         robot.resetDispenserRotation();
         robot.resetSorterPosition();
     }
@@ -77,7 +77,7 @@ public class LegoRobot {
      * @param speed Sets the speed for how fast the sorter should move
      * @param directionForwards Sets which direction to move in
      */
-    public void moveSorter(int speed, boolean directionForwards) {
+    private void moveSorter(int speed, boolean directionForwards) {
         // sets speed for sorter
         largeRegulatedMotor.setSpeed(speed);
 
@@ -92,7 +92,7 @@ public class LegoRobot {
     /**
      * Method for moving the sorter to the start position
      */
-    public void resetSorterPosition() {
+    private void resetSorterPosition() {
         // move the sorter towards it's start position until reset button is pressed
         while (!touchSensor.isPressed()) {
             robot.moveSorter(600, false);
@@ -105,7 +105,7 @@ public class LegoRobot {
     /**
      * Method for resetting the dispenser mechanism
      */
-    public void resetDispenserRotation() {
+    private void resetDispenserRotation() {
         // rotate the dispenser mechanism towards it's start position until it is stalled
         while (!mediumRegulatedMotor.isStalled()) {
             mediumRegulatedMotor.setSpeed(150);
@@ -119,7 +119,7 @@ public class LegoRobot {
     /**
      * Method for dispensing a single color block
      */
-    public void dispense() {
+    private void dispense() {
         // rotate the dispenser mechanism for a set time to dispense a color
         mediumRegulatedMotor.setSpeed(250);
         mediumRegulatedMotor.backward();
@@ -134,7 +134,7 @@ public class LegoRobot {
      * @param delay Delay defining (in ms) how much time it should spend moving the sorter before dispensing a color
      * @param currentColor Sets the current color getting sorted for the method to compare to the next
      */
-    public void sortColor(int delay, int currentColor) {
+    private void sortColor(int delay, int currentColor) {
         System.out.println("Sorting " + colors[currentColor] + "!");
 
         // move to dispense location
@@ -180,7 +180,7 @@ public class LegoRobot {
      * Retrieves the current color to be sorted
      * @return The ID corresponding with the color read
      */
-    public int getColorID() {
+    private int getColorID() {
         colorSensor.getColorIDMode();
 
         // a float array that is going to store the sample from the color sensor
@@ -194,9 +194,8 @@ public class LegoRobot {
     }
 
     public static void main(String[] args) {
-        robot.resetSorterPosition();
+        robot.init();
         mediumRegulatedMotor.stop();
-        robot.resetDispenserRotation();
         largeRegulatedMotor.stop();
 
         while (true) {
