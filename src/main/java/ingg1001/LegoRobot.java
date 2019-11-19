@@ -1,14 +1,10 @@
 package ingg1001;
-
 import ev3dev.actuators.lego.motors.EV3LargeRegulatedMotor;
 import ev3dev.actuators.lego.motors.EV3MediumRegulatedMotor;
-
 import ev3dev.sensors.ev3.EV3ColorSensor;
 import ev3dev.sensors.ev3.EV3TouchSensor;
-
 import lejos.hardware.port.MotorPort;
 import lejos.hardware.port.SensorPort;
-
 import lejos.utility.Delay;
 
 /**
@@ -19,9 +15,7 @@ import lejos.utility.Delay;
  * @author Ronning-nyvold, Petter
  * @author Sandvold, Mathias
  */
-
 public class LegoRobot {
-
     // hardware
     private static final EV3LargeRegulatedMotor largeRegulatedMotor = new EV3LargeRegulatedMotor(MotorPort.A);
     private static final EV3ColorSensor colorSensor = new EV3ColorSensor(SensorPort.S1);
@@ -38,13 +32,11 @@ public class LegoRobot {
      * Enum containing the values for how far the sorter should move for each color
      */
     private enum MoveDistances {
-        // sets the colors and their respective move distances
         BLUE(0),
         GREEN(150),
         YELLOW(450),
         RED(750);
 
-        // moveDistance field
         private final int moveDistance;
 
         /**
@@ -78,10 +70,8 @@ public class LegoRobot {
      * @param directionForwards Sets which direction to move in
      */
     private void moveSorter(int speed, boolean directionForwards) {
-        // sets speed for sorter
         largeRegulatedMotor.setSpeed(speed);
 
-        // move sorter, either forwards or backwards
         if (directionForwards) {
             largeRegulatedMotor.forward();
         } else {
@@ -97,8 +87,6 @@ public class LegoRobot {
         while (!touchSensor.isPressed()) {
             robot.moveSorter(600, false);
         }
-
-        // stop the motor
         largeRegulatedMotor.stop();
     }
 
@@ -111,8 +99,6 @@ public class LegoRobot {
             mediumRegulatedMotor.setSpeed(150);
             mediumRegulatedMotor.forward();
         }
-
-        // stop the motor
         mediumRegulatedMotor.stop();
     }
 
@@ -124,8 +110,6 @@ public class LegoRobot {
         mediumRegulatedMotor.setSpeed(250);
         mediumRegulatedMotor.backward();
         Delay.msDelay(1000);
-
-        // stop the motor
         mediumRegulatedMotor.stop();
     }
 
@@ -141,38 +125,26 @@ public class LegoRobot {
         robot.moveSorter(600, true);
         Delay.msDelay(delay);
         largeRegulatedMotor.stop();
-
-        // chill
         Delay.msDelay(250);
 
-        // dispense that shit
         robot.dispense();
         mediumRegulatedMotor.stop();
-
-        // reset dispenser
         robot.resetDispenserRotation();
         mediumRegulatedMotor.stop();
-
-        // wait for new color to fall in place
         Delay.msDelay(250);
 
         // read new color and compare to last, if equal dispense the new color block
         if (robot.getColorID() == currentColor) {
             System.out.println("Sorted double!");
 
-            // dispense that shit
             robot.dispense();
             mediumRegulatedMotor.stop();
 
-            // reset dispenser
             robot.resetDispenserRotation();
             mediumRegulatedMotor.stop();
         }
 
-        // go back to start
-        while (!touchSensor.isPressed()) {
-            robot.moveSorter(600, false);
-        }
+        robot.resetSorterPosition();
         largeRegulatedMotor.stop();
     }
 
@@ -182,8 +154,6 @@ public class LegoRobot {
      */
     private int getColorID() {
         colorSensor.getColorIDMode();
-
-        // a float array that is going to store the sample from the color sensor
         float[] colorSample = new float[colorSensor.sampleSize()];
 
         // returns a color ID from 0-7 depending on color read
@@ -199,7 +169,6 @@ public class LegoRobot {
         largeRegulatedMotor.stop();
 
         while (true) {
-            // read current color
             int currentColor = robot.getColorID();
 
             // check read color and call sortColor method
