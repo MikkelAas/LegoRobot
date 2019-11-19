@@ -66,11 +66,10 @@ public class LegoRobot {
 
     /**
      * Method for moving the sorter
-     * @param speed Sets the speed for how fast the sorter should move
      * @param directionForwards Sets which direction to move in
      */
-    private void moveSorter(int speed, boolean directionForwards) {
-        largeRegulatedMotor.setSpeed(speed);
+    private void moveSorter(boolean directionForwards) {
+        largeRegulatedMotor.setSpeed(600);
 
         if (directionForwards) {
             largeRegulatedMotor.forward();
@@ -85,7 +84,7 @@ public class LegoRobot {
     private void resetSorterPosition() {
         // move the sorter towards it's start position until reset button is pressed
         while (!touchSensor.isPressed()) {
-            robot.moveSorter(600, false);
+            robot.moveSorter(false);
         }
         largeRegulatedMotor.stop();
     }
@@ -122,7 +121,7 @@ public class LegoRobot {
         System.out.println("Sorting " + colors[currentColor] + "!");
 
         // move to dispense location
-        robot.moveSorter(600, true);
+        robot.moveSorter(true);
         Delay.msDelay(delay);
         largeRegulatedMotor.stop();
         Delay.msDelay(250);
